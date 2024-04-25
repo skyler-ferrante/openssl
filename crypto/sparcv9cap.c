@@ -93,7 +93,8 @@ void OPENSSL_cpuid_setup(void)
         return;
     trigger = 1;
 
-    if ((e = getenv("OPENSSL_sparcv9cap"))) {
+    if (OPENSSL_issetugid() == 0
+	&& (e = getenv("OPENSSL_sparcv9cap"))) {
         OPENSSL_sparcv9cap_P[0] = strtoul(e, NULL, 0);
         if ((e = strchr(e, ':')))
             OPENSSL_sparcv9cap_P[1] = strtoul(e + 1, NULL, 0);

@@ -88,7 +88,8 @@ void OPENSSL_cpuid_setup(void)
         return;
     trigger = 1;
 
-    if ((e = getenv("OPENSSL_riscvcap"))) {
+    if (OPENSSL_issetugid() == 0
+	&& (e = getenv("OPENSSL_riscvcap"))) {
         parse_env(e);
     }
 
