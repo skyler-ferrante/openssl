@@ -103,7 +103,8 @@ void OPENSSL_cpuid_setup(void)
         return;
 
     trigger = 1;
-    if ((env = ossl_getenv("OPENSSL_ia32cap")) != NULL) {
+    if (OPENSSL_issetugid() == 0
+	&& (env = ossl_getenv("OPENSSL_ia32cap")) != NULL) {
         int off = (env[0] == '~') ? 1 : 0;
 
         vec = ossl_strtouint64(env + off);

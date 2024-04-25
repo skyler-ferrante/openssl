@@ -171,7 +171,11 @@ void OPENSSL_cpuid_setup(void)
     }
 #endif
 
-    env = getenv("OPENSSL_s390xcap");
+    if(OPENSSL_issetugid() == 0)
+	env = getenv("OPENSSL_s390xcap");
+    else
+	env = NULL
+
     if (env != NULL) {
         if (!parse_env(&cap, &cex))
             env = NULL;

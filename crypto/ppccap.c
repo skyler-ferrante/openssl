@@ -148,7 +148,8 @@ void OPENSSL_cpuid_setup(void)
         return;
     trigger = 1;
 
-    if ((e = getenv("OPENSSL_ppccap"))) {
+    if (OPENSSL_issetugid() == 0
+	&& (e = getenv("OPENSSL_ppccap"))) {
         OPENSSL_ppccap_P = strtoul(e, NULL, 0);
         return;
     }
